@@ -22,4 +22,5 @@ fi
 [ ! -r $_APPS ] && echo "export APPS_DIR=~/CHANGE_TO_THE_CORRECT_DIRECTORY" > $_APPS
 write () { grep -qxF "$1" $2 || echo '\n'$1'\c' >> $2; }
 write '[ -r ~/.tprc ] && . ~/.tprc' $_BAPF
+echo 'Done.'
 bash -l
