@@ -1,0 +1,25 @@
+#!/bin/sh
+
+_TPRC=$HOME/.tprc; _APPS=$HOME/.apps; _BAPF=$HOME/.bash_profile
+set -e; echo $'
+[ -r $HOME/.apps ] && . $HOME/.apps
+if [ -d $APPS_DIR ]; then 
+    _comp_tp () 
+    {
+        local cur=${COMP_WORDS[COMP_CWORD]}; COMPREPLY=()
+        case "$cur" in
+            *)
+            COMPREPLY=($(compgen -W "$(ls $APPS_DIR)" -- $cur));
+        esac; return 0; }; tp () { 
+        : {1? "Missing argument error" }; cd $APPS_DIR/$1
+        cd ./$(find . -maxdepth 4 -name ".git" | head -n 1)/..
+    }
+    complete -F _comp_tp -o filenames tp
+else
+    echo "\nWarning: \$APPS_DIR is not set";
+fi
+' > $_TPRC
+[ ! -r $_APPS ] && echo "export APPS_DIR=~/CHANGE_TO_THE_CORRECT_DIRECTORY" > $_APPS
+write () { grep -qxF "$1" $2 || echo '\n'$1'\c' >> $2; }
+write '[ -r ~/.tprc ] && . ~/.tprc' $_BAPF
+bash -l
