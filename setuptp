@@ -16,7 +16,7 @@ if [ -d $APPS_DIR ]; then
     }
     complete -F _comp_tp -o filenames tp
 else
-    echo "\nWarning: \$APPS_DIR is not set";
+    echo "\nWarning: \$APPS_DIR is not set or specified directory does not exist";
 fi
 ' > $_TPRC
 [ ! -r $_APPS ] && echo "export APPS_DIR=~/CHANGE_TO_THE_CORRECT_DIRECTORY" > $_APPS
